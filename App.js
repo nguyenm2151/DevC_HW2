@@ -2,10 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <View style={styles.headertab}>
+      <AntDesign name="arrowleft" size={24} color="black" />
+      <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
+      </View> 
       <View style={styles.header}>
                   
                   <View style={styles.avatarArea}>
@@ -20,7 +27,9 @@ export default function App() {
                   <View style={styles.buttonArea}>
                     <TouchableOpacity>
                     <View style={styles.follow}>
-                    <Text style={styles.followtext}> Follow </Text>
+                    <Text id="followbutton" style={styles.followtext} 
+                    onPress={() => alert("Followed")}> 
+                    Follow </Text>
                     </View>
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -33,20 +42,12 @@ export default function App() {
       </View>
 
       <View style={styles.number}>
+                  {numbers.map((number) => (
                   <View style={styles.numberall}>
-                  <Text style={styles.numberrow1}>210</Text>
-                  <Text style={styles.numberrow2}>Photos</Text>
+                  <Text style={styles.numberrow1}>{number.quantity}</Text>
+                  <Text style={styles.numberrow2}>{number.name}</Text>
                   </View>
-
-                  <View style={styles.numberall}>
-                  <Text style={styles.numberrow1}>15k</Text>
-                  <Text style={styles.numberrow2}>Followers</Text>
-                  </View>
-
-                  <View style={styles.numberall}>
-                  <Text style={styles.numberrow1}>605</Text>
-                  <Text style={styles.numberrow2}>Following</Text>
-                  </View> 
+                  ))}
       </View>
 
       <View style={styles.photosArea}>
@@ -57,9 +58,9 @@ export default function App() {
                       alignItems:"center"
                     }}
                     >
-                  <View style={styles.photos}>
+                  <View>
                   {imgData.slice(0,centerImgData).map(item =>{
-                    return <Image source={item.imgSource} style={styles.image}/>;
+                    return <Image source={item.imgSource} style={styles.image} key={item.key}/>;
                   })}
                   </View>
 
@@ -70,12 +71,26 @@ export default function App() {
                   </View>
                   </ScrollView>
       </View>
-
+      <View style={styles.bottomtab}>
+      <TouchableOpacity>
+      <AntDesign name="aliwangwang-o1" size={24} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity>
+      <AntDesign name="pluscircleo" size={24} color="black" />
+      </TouchableOpacity>
+      <TouchableOpacity>
+      <MaterialIcons name="person-outline" size={24} color="black" />
+      </TouchableOpacity>
+      </View> 
     </View>
   );
 }
 
-
+const numbers=[
+{name: "Photos", quantity:"210"},
+{name: "Followers", quantity:"15k"},
+{name: "Following", quantity:"605"},
+];
 const imgData = [
   { id: 1, imgSource: require('./assets/1.jpg') },
   { id: 2, imgSource: require('./assets/2.jpg') },
@@ -98,8 +113,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  headertab:{
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    flex: 0.025,
+    flexDirection:"row",
+    justifyContent: "space-between",
+    
+  },
+
   header: {
-    flex: 0.275,
+    flex: 0.25,
     backgroundColor:"white",
     flexDirection:"row",
     justifyContent: "center",
@@ -143,7 +168,14 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(71,113,246)",
     borderRadius: 12,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    shadowColor: '#2f405c',
+    shadowOffset: {
+      width: 1,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
   },
 
   followtext: {
@@ -159,11 +191,18 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(120,213,250)",
     borderRadius: 12,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    shadowColor: '#8daee3',
+    shadowOffset: {
+      width: 1,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
   },
 
   number: {
-    flex: 0.125,
+    flex: 0.1,
     flexDirection:"row",
     justifyContent: "space-around",
     alignItems:"center"
@@ -192,10 +231,10 @@ const styles = StyleSheet.create({
   },
 
   photosArea: {
-    flex:0.6,
+    flex:0.55,
     },
 
-   image: {
+  image: {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
@@ -205,4 +244,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     },
 
+  bottomtab:{
+    marginTop: 10,
+    flex: 0.075,
+    flexDirection:"row",
+    justifyContent: "space-around",
+  },
 });
+
